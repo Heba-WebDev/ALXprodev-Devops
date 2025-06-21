@@ -1,0 +1,12 @@
+#!/bin/bash
+
+OUTPUT_FILE="data.json"
+ERROR_FILE="errors.txt"
+POKEMON="pikachu"
+
+HTTP_STATUS=$(curl -s -w "%{http_code}" -o "$OUTPUT_FILE" "https://pokeapi.co/api/v2/pokemon/$POKEMON")
+
+if [ "$HTTP_STATUS" -ne 200 ]; then
+  echo "Error: Failed to fetch data for $POKEMON (Status: $HTTP_STATUS)" >> "$ERROR_FILE"
+  exit 1
+fi
